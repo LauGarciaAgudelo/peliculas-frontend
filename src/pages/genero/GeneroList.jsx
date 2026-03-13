@@ -47,6 +47,57 @@ function GeneroList() {
     }
   };
 
+  let content;
+  if (loading) {
+    content = <div className="alert alert-info">Cargando géneros...</div>;
+  } else if (generos.length === 0) {
+    content = <div className="alert alert-warning">No hay géneros registrados.</div>;
+  } else {
+    content = (
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped">
+          <thead className="table-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>Fecha creación</th>
+              <th>Fecha actualización</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {generos.map((genero) => (
+              <tr key={genero._id}>
+                <td>{genero.nombre}</td>
+                <td>{genero.estado}</td>
+                <td>{genero.descripcion}</td>
+                <td>{new Date(genero.createdAt).toLocaleString()}</td>
+                <td>{new Date(genero.updatedAt).toLocaleString()}</td>
+                <td>
+                  <div className="d-flex gap-2">
+                    <Link
+                      to={`/generos/editar/${genero._id}`}
+                      className="btn btn-warning btn-sm"
+                    >
+                      Editar
+                    </Link>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => eliminarGenero(genero._id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -58,54 +109,7 @@ function GeneroList() {
           Nuevo género
         </Link>
       </div>
-
-      {loading ? (
-        <div className="alert alert-info">Cargando géneros...</div>
-      ) : generos.length === 0 ? (
-        <div className="alert alert-warning">No hay géneros registrados.</div>
-      ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-striped">
-            <thead className="table-dark">
-              <tr>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Descripción</th>
-                <th>Fecha creación</th>
-                <th>Fecha actualización</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {generos.map((genero) => (
-                <tr key={genero._id}>
-                  <td>{genero.nombre}</td>
-                  <td>{genero.estado}</td>
-                  <td>{genero.descripcion}</td>
-                  <td>{new Date(genero.createdAt).toLocaleString()}</td>
-                  <td>{new Date(genero.updatedAt).toLocaleString()}</td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link
-                        to={`/generos/editar/${genero._id}`}
-                        className="btn btn-warning btn-sm"
-                      >
-                        Editar
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => eliminarGenero(genero._id)}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {content}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import PageHeader from "../../components/PageHeader";
@@ -27,7 +27,8 @@ function GeneroForm() {
     }));
   };
 
-  const cargarGenero = async () => {
+
+  const cargarGenero = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axiosClient.get(`/generos/${id}`);
@@ -37,48 +38,47 @@ function GeneroForm() {
         descripcion: response.data.descripcion || "",
       });
     } catch (error) {
-      console.error("Error al cargar el género:", error);
+      console.error(error);
       Swal.fire("Error", "No fue posible cargar el género", "error");
       navigate("/generos");
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, navigate]);
 
   useEffect(() => {
     if (esEdicion) {
       cargarGenero();
     }
-  }, [id]);
+  }, [esEdicion, cargarGenero]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  async function handleSubmit(e) {
+        e.preventDefault();
 
-    if (!formData.nombre.trim()) {
-      Swal.fire("Validación", "El nombre es obligatorio", "warning");
-      return;
+        if (!formData.nombre.trim()) {
+            Swal.fire("Validación", "El nombre es obligatorio", "warning");
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            if (esEdicion) {
+                await axiosClient.put(`/generos/${id}`, formData);
+                Swal.fire("Actualizado", "El género fue actualizado correctamente", "success");
+            } else {
+                await axiosClient.post("/generos", formData);
+                Swal.fire("Creado", "El género fue creado correctamente", "success");
+            }
+
+            navigate("/generos");
+        } catch (error) {
+            const message = error.response?.data?.message || "Ocurrió un error al guardar el género";
+            Swal.fire("Error", message, "error");
+        } finally {
+            setLoading(false);
+        }
     }
-
-    try {
-      setLoading(true);
-
-      if (esEdicion) {
-        await axiosClient.put(`/generos/${id}`, formData);
-        Swal.fire("Actualizado", "El género fue actualizado correctamente", "success");
-      } else {
-        await axiosClient.post("/generos", formData);
-        Swal.fire("Creado", "El género fue creado correctamente", "success");
-      }
-
-      navigate("/generos");
-    } catch (error) {
-      const message =
-        error.response?.data?.message || "Ocurrió un error al guardar el género";
-      Swal.fire("Error", message, "error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div>
@@ -91,10 +91,11 @@ function GeneroForm() {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label">Nombre</label>
+              <label className="form-label" htmlFor="nombre">Nombre</label>
               <input
                 type="text"
                 className="form-control"
+                id="nombre"
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
@@ -103,9 +104,10 @@ function GeneroForm() {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Estado</label>
+              <label className="form-label" htmlFor="estado">Estado</label>
               <select
                 className="form-select"
+                id="estado"
                 name="estado"
                 value={formData.estado}
                 onChange={handleChange}
@@ -116,9 +118,10 @@ function GeneroForm() {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Descripción</label>
+              <label className="form-label" htmlFor="descripcion">Descripción</label>
               <textarea
                 className="form-control"
+                id="descripcion"
                 rows="4"
                 name="descripcion"
                 value={formData.descripcion}

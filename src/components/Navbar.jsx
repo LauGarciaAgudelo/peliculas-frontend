@@ -1,51 +1,91 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
-        <Link className="navbar-brand" to="/">
-          Películas App
-        </Link>
+        <NavLink to="/" className="navbar-brand fw-bold">
+          Media Manager
+        </NavLink>
 
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#mainNavbar"
-          aria-controls="mainNavbar"
+          data-bs-target="#navbarContenido"
+          aria-controls="navbarContenido"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
-          <ul className="navbar-nav ms-auto">
+        <div className="collapse navbar-collapse" id="navbarContenido">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/generos">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
+                Inicio
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink
+                to="/generos"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
                 Género
-              </Link>
+              </NavLink>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/directores">
+              <NavLink
+                to="/directores"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
                 Director
-              </Link>
+              </NavLink>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/productoras">
+              <NavLink
+                to="/productoras"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
                 Productora
-              </Link>
+              </NavLink>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/tipos">
+              <NavLink
+                to="/tipos"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
                 Tipo
-              </Link>
+              </NavLink>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/medias">
+              <NavLink
+                to="/medias"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-semibold" : ""}`
+                }
+              >
                 Media
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

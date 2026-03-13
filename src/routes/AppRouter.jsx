@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
 import GeneroList from "../pages/genero/GeneroList";
 import GeneroForm from "../pages/genero/GeneroForm";
 import DirectorList from "../pages/director/DirectorList";
@@ -8,11 +9,12 @@ import ProductoraForm from "../pages/productora/ProductoraForm";
 import TipoList from "../pages/tipo/TipoList";
 import TipoForm from "../pages/tipo/TipoForm";
 import MediaList from "../pages/media/MediaList";
+import MediaForm from "../pages/media/MediaForm";
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/generos" />} />
+      <Route path="/" element={<Home />} />
 
       <Route path="/generos" element={<GeneroList />} />
       <Route path="/generos/nuevo" element={<GeneroForm />} />
@@ -31,6 +33,8 @@ function AppRouter() {
       <Route path="/tipos/editar/:id" element={<TipoForm />} />
 
       <Route path="/medias" element={<MediaList />} />
+      <Route path="/medias/nuevo" element={<MediaForm />} />
+      <Route path="/medias/editar/:id" element={<MediaForm />} />
     </Routes>
   );
 }
