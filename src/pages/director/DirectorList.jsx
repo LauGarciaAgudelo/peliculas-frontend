@@ -45,6 +45,55 @@ function DirectorList() {
     }
   };
 
+  let content;
+  if (loading) {
+    content = <div className="alert alert-info">Cargando directores...</div>;
+  } else if (directores.length === 0) {
+    content = <div className="alert alert-warning">No hay directores registrados.</div>;
+  } else {
+    content = (
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped">
+          <thead className="table-dark">
+            <tr>
+              <th>Nombres</th>
+              <th>Estado</th>
+              <th>Fecha creación</th>
+              <th>Fecha actualización</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {directores.map((director) => (
+              <tr key={director._id}>
+                <td>{director.nombres}</td>
+                <td>{director.estado}</td>
+                <td>{new Date(director.createdAt).toLocaleString()}</td>
+                <td>{new Date(director.updatedAt).toLocaleString()}</td>
+                <td>
+                  <div className="d-flex gap-2">
+                    <Link
+                      to={`/directores/editar/${director._id}`}
+                      className="btn btn-warning btn-sm"
+                    >
+                      Editar
+                    </Link>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => eliminarDirector(director._id)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -57,51 +106,7 @@ function DirectorList() {
         </Link>
       </div>
 
-      {loading ? (
-        <div className="alert alert-info">Cargando directores...</div>
-      ) : directores.length === 0 ? (
-        <div className="alert alert-warning">No hay directores registrados.</div>
-      ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-striped">
-            <thead className="table-dark">
-              <tr>
-                <th>Nombres</th>
-                <th>Estado</th>
-                <th>Fecha creación</th>
-                <th>Fecha actualización</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {directores.map((director) => (
-                <tr key={director._id}>
-                  <td>{director.nombres}</td>
-                  <td>{director.estado}</td>
-                  <td>{new Date(director.createdAt).toLocaleString()}</td>
-                  <td>{new Date(director.updatedAt).toLocaleString()}</td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link
-                        to={`/directores/editar/${director._id}`}
-                        className="btn btn-warning btn-sm"
-                      >
-                        Editar
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => eliminarDirector(director._id)}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {content}
     </div>
   );
 }

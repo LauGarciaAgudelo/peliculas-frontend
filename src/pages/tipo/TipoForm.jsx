@@ -5,11 +5,11 @@ import PageHeader from "../../components/PageHeader";
 import Swal from "sweetalert2";
 
 const initialForm = {
-  nombres: "",
-  estado: "ACTIVO",
+  nombre: "",
+  descripcion: "",
 };
 
-function DirectorForm() {
+function TipoForm() {
   const [formData, setFormData] = useState(initialForm);
   const [loading, setLoading] = useState(false);
 
@@ -27,18 +27,18 @@ function DirectorForm() {
   };
 
 
-  const cargarDirector = useCallback(async () => {
+  const cargarTipo = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axiosClient.get(`/directores/${id}`);
+      const response = await axiosClient.get(`/tipos/${id}`);
       setFormData({
-        nombres: response.data.nombres || "",
-        estado: response.data.estado || "ACTIVO",
+        nombre: response.data.nombre || "",
+        descripcion: response.data.descripcion || "",
       });
     } catch (error) {
-      const message = error.response?.data?.message || "No fue posible cargar el director";
+      const message = error.response?.data?.message || "No fue posible cargar el tipo";
       Swal.fire("Error", message, "error");
-      navigate("/directores");
+      navigate("/tipos");
     } finally {
       setLoading(false);
     }
@@ -46,15 +46,15 @@ function DirectorForm() {
 
   useEffect(() => {
     if (esEdicion) {
-      cargarDirector();
+      cargarTipo();
     }
-  }, [id, cargarDirector, esEdicion]);
+  }, [esEdicion, cargarTipo]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.nombres.trim()) {
-      Swal.fire("Validación", "Los nombres son obligatorios", "warning");
+    if (!formData.nombre.trim()) {
+      Swal.fire("Validación", "El nombre es obligatorio", "warning");
       return;
     }
 
@@ -62,17 +62,17 @@ function DirectorForm() {
       setLoading(true);
 
       if (esEdicion) {
-        await axiosClient.put(`/directores/${id}`, formData);
-        Swal.fire("Actualizado", "El director fue actualizado correctamente", "success");
+        await axiosClient.put(`/tipos/${id}`, formData);
+        Swal.fire("Actualizado", "El tipo fue actualizado correctamente", "success");
       } else {
-        await axiosClient.post("/directores", formData);
-        Swal.fire("Creado", "El director fue creado correctamente", "success");
+        await axiosClient.post("/tipos", formData);
+        Swal.fire("Creado", "El tipo fue creado correctamente", "success");
       }
 
-      navigate("/directores");
+      navigate("/tipos");
     } catch (error) {
       const message =
-        error.response?.data?.message || "Ocurrió un error al guardar el director";
+        error.response?.data?.message || "Ocurrió un error al guardar el tipo";
       Swal.fire("Error", message, "error");
     } finally {
       setLoading(false);
@@ -82,38 +82,37 @@ function DirectorForm() {
   return (
     <div>
       <PageHeader
-        title={esEdicion ? "Editar Director" : "Nuevo Director"}
-        subtitle="Formulario de gestión de director"
+        title={esEdicion ? "Editar Tipo" : "Nuevo Tipo"}
+        subtitle="Formulario de gestión de tipo"
       />
 
       <div className="card shadow-sm">
         <div className="card-body">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label" htmlFor="nombres">Nombres</label>
+              <label className="form-label" htmlFor="nombre">Nombre</label>
               <input
-                id="nombres"
                 type="text"
                 className="form-control"
-                name="nombres"
-                value={formData.nombres}
+                id="nombre"
+                name="nombre"
+                value={formData.nombre}
                 onChange={handleChange}
-                placeholder="Ingrese el nombre del director"
+                placeholder="Ingrese el nombre del tipo"
               />
             </div>
 
             <div className="mb-3">
-              <label className="form-label" htmlFor="estado">Estado</label>
-              <select
-                id="estado"
-                className="form-select"
-                name="estado"
-                value={formData.estado}
+              <label className="form-label" htmlFor="descripcion">Descripción</label>
+              <textarea
+                className="form-control"
+                id="descripcion"
+                rows="4"
+                name="descripcion"
+                value={formData.descripcion}
                 onChange={handleChange}
-              >
-                <option value="ACTIVO">ACTIVO</option>
-                <option value="INACTIVO">INACTIVO</option>
-              </select>
+                placeholder="Ingrese una descripción"
+              ></textarea>
             </div>
 
             <div className="d-flex gap-2">
@@ -123,7 +122,7 @@ function DirectorForm() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                onClick={() => navigate("/directores")}
+                onClick={() => navigate("/tipos")}
               >
                 Cancelar
               </button>
@@ -135,4 +134,4 @@ function DirectorForm() {
   );
 }
 
-export default DirectorForm;
+export default TipoForm;

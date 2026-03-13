@@ -7,4 +7,11 @@ function PageHeader({ title, subtitle }) {
   );
 }
 
+import PropTypes from 'prop-types';
+
+PageHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+};
+
 export default PageHeader;
