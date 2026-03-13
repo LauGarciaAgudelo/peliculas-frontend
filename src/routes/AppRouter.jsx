@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import GeneroList from "../pages/genero/GeneroList";
 import GeneroForm from "../pages/genero/GeneroForm";

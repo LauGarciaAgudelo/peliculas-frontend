@@ -38,14 +38,15 @@ function Home() {
 
   return (
     <div>
-      <div className="p-4 p-md-5 mb-4 bg-light rounded-3 shadow-sm border">
+      <div className="p-4 p-md-5 mb-4 rounded-3 shadow-sm text-white"
+        style={{ background: "linear-gradient(135deg, #0078d4, #0361a8)" }}>
         <div className="container-fluid py-2">
-          <h1 className="display-5 fw-bold">Sistema de Gestión de Media</h1>
-          <p className="col-md-10 fs-5 text-muted">
-            Aplicación web administrativa desarrollada en ReactJS para gestionar
-            géneros, directores, productoras, tipos, películas y series,
-            consumiendo una API REST construida con Node.js, Express y MongoDB.
-          </p>
+            <h1 className="display-6 fw-bold">Sistema de Gestión de Media</h1>
+
+        <p className="col-md-10 fs-5">
+        Aplicación web administrativa desarrollada en ReactJS para gestionar
+        géneros, directores, productoras, tipos, películas y series.
+        </p>
           <button
             className="btn btn-dark btn-lg mt-2"
             onClick={() => navigate("/medias")}
@@ -76,29 +77,7 @@ function Home() {
         ))}
       </div>
 
-      <div className="card shadow-sm border-0 mt-2">
-        <div className="card-body">
-          <h4 className="fw-bold mb-3">Tecnologías utilizadas</h4>
-          <div className="row">
-            <div className="col-md-6">
-              <ul className="text-muted">
-                <li>ReactJS</li>
-                <li>React Router</li>
-                <li>Axios</li>
-                <li>Bootstrap</li>
-              </ul>
-            </div>
-            <div className="col-md-6">
-              <ul className="text-muted">
-                <li>SweetAlert2</li>
-                <li>Node.js</li>
-                <li>Express</li>
-                <li>MongoDB</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </div>
   );
 }

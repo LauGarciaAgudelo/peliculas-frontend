@@ -9,7 +9,6 @@ function MediaForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    serial: "",
     titulo: "",
     sinopsis: "",
     url: "",
@@ -65,7 +64,6 @@ function MediaForm() {
       const media = response.data;
 
       setFormData({
-        serial: media.serial || "",
         titulo: media.titulo || "",
         sinopsis: media.sinopsis || "",
         url: media.url || "",
@@ -89,7 +87,6 @@ function MediaForm() {
     e.preventDefault();
 
     if (
-      !formData.serial ||
       !formData.titulo ||
       !formData.anioEstreno ||
       !formData.generoId ||
@@ -144,18 +141,11 @@ function MediaForm() {
           ) : (
             <form onSubmit={handleSubmit}>
               <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label" htmlFor="serial">Serial</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="serial"
-                    name="serial"
-                    value={formData.serial}
-                    onChange={handleChange}
-                  />
+                <div className="col-12 mb-3">
+                  <div className="alert alert-info mb-0">
+                    El serial se genera automáticamente según el tipo seleccionado.
+                  </div>
                 </div>
-
                 <div className="col-md-6 mb-3">
                   <label className="form-label" htmlFor="titulo">Título</label>
                   <input

@@ -5,6 +5,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
         <NavLink to="/" className="navbar-brand fw-bold">
+          <i className="bi bi-film me-2"></i>{" "}
           Media Manager
         </NavLink>
 
@@ -29,6 +30,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+              <i className="bi bi-house-door me-1"></i>{" "}
                 Inicio
               </NavLink>
             </li>
@@ -40,6 +42,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+                <i className="bi bi-tags me-1"></i>{" "}
                 Género
               </NavLink>
             </li>
@@ -51,6 +54,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+                <i className="bi bi-person-video3 me-1"></i> {" "}
                 Director
               </NavLink>
             </li>
@@ -62,6 +66,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+                <i className="bi bi-building me-1"></i>{" "}
                 Productora
               </NavLink>
             </li>
@@ -73,6 +78,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+                <i className="bi bi-collection me-1"></i>{" "}
                 Tipo
               </NavLink>
             </li>
@@ -84,6 +90,7 @@ function Navbar() {
                   `nav-link ${isActive ? "active fw-semibold" : ""}`
                 }
               >
+                <i className="bi bi-film me-1"></i>{" "}
                 Media
               </NavLink>
             </li>
